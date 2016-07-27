@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = "blackjackApp">
 <head>
-  <title></title>
-<link rel="stylesheet" type="text/css" href="src/css/styles.css">
+	<title></title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
 <script src="../bower_components/angular/angular.js"></script>
-
 </head>
-<body>
 
+<body ng-controller = "MainCtrl as ctrl">
+	<div class = "title">
+		<h1>Blackjack</h1>
+	</div>
+
+<div>
+  <h4>Number of Decks</h4>
+<select ng-model= "ctrl.numDecks">
+  <option value=1>One</option>
+  <option value=2>Two</option>
+  <option value=3>Three</option>
+  <option value=4>Four</option>
+  <option value=5>Five</option>
+  <option value=6>Six</option>
+</select>
+
+  <h4>Players</h4>
+<select ng-model= "ctrl.numPlayers">
+  <option value=1>One</option>
+  <option value=2>Two</option>
+  <option value=3>Three</option>
+  <option value=4>Four</option>
+  <option value=5>Five</option>
+  <option value=6>Six</option>
+</select>
+</div>
+
+<button ng-click = "ctrl.shuffle()">
+  Shuffle Decks </button>
+
+
+
+<script type="text/javascript" src="js/dealerApp.js"></script>
+<script type="text/javascript" src="js/shuffle.js"></script>
 
 </body>
-
 </html>
