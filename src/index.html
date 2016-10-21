@@ -22,7 +22,7 @@
   <option value=6>Six</option>
 </select>
 
-  <h4>Players</h4>
+  <!-- <h4>Players</h4>
 <select ng-model= "ctrl.numPlayers">
   <option value=1>One</option>
   <option value=2>Two</option>
@@ -31,10 +31,16 @@
   <option value=5>Five</option>
   <option value=6>Six</option>
 </select>
-</div>
+</div> -->
 
 <button ng-click = "ctrl.shuffle()">
   Shuffle Decks </button>
+
+<div class = "cardContainer">
+	<span ng-repeat = "card in ctrl.hand.cards">
+		<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
+	</span>
+</div>
 
 
 
