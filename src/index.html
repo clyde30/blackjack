@@ -8,7 +8,7 @@
 
 <body ng-controller = "MainCtrl as ctrl">
 	<div class = "title">
-		<h1>Blackjack</h1>
+		<h1></h1>
 	</div>
 
 <div>
@@ -35,6 +35,8 @@
 
 <button ng-click = "ctrl.shuffle()">
   Shuffle Decks </button>
+
+<button ng-click = "ctrl.initialDeal()">Deal</button>
 
 <div class = "cardContainer">
 	<span ng-repeat = "card in ctrl.hand.cards">

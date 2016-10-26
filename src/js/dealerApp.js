@@ -6,18 +6,19 @@ angular.module('blackjackApp', [])
     self.shuffle = function () {
       var numDecks = self.numDecks;
       shuffle(numDecks);
-      self.player1 = [];
-      self.dealer = [];
+      // self.player1.hand = [];
+      // self.dealer.hand = [];
       console.log("Shuffled " + numDecks + " decks");
     };
 
     self.initialDeal = function () {
-      self.player1 =  new Player();
-      self.dealer = new Player();
-      self.player1 = dealCard();
-      self.dealer = dealCard();
-      console.log(self.player1);
-      console.log(self.dealer);
+      console.log("Dealing");
+      var player =  new Player();
+      var dealer = new Player();
+      player.hand.push(dealCard());
+      dealer.hand.push(dealCard());
+      console.log(player.hand);
+      console.log(dealer.hand);
     }
 
 
