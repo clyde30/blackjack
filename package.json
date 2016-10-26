@@ -1,0 +1,19 @@
+{
+  "name": "blackjack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clyde30/blackjack.git"
+  },
+  "author": "Austin Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clyde30/blackjack/issues"
+  },
+  "homepage": "https://github.com/clyde30/blackjack#readme"
+}

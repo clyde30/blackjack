@@ -1,0 +1,21 @@
+{
+  "name": "blackjack",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "Austin Jones"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/clyde30/blackjack",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "^1.5.8"
+  }
+}
