@@ -12,10 +12,11 @@ angular.module('blackjackApp', [])
     self.initialDeal = function () {
       var deck = self.deck;
       console.log("Dealing");
-      self.player = new Player(dealNewHand(2, deck));
-      self.dealer = new Player(dealNewHand(2, deck));
-      self.player.hand.push();
-      self.dealer.hand.push();
-      console.log(self.player.hand);
+      self.player = new Player();
+      self.dealer = new Player();
+      self.player.hand = dealHand(1, self.player.hand, deck);
+      self.dealer.hand = dealHand(1, self.dealer.hand, deck);
+      self.player.hand = dealHand(1, self.player.hand, deck);
+      self.dealer.hand = dealHand(1, self.dealer.hand, deck);
     }
   }]);
