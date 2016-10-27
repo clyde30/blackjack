@@ -18,5 +18,10 @@ angular.module('blackjackApp', [])
       self.dealer.hand = dealHand(1, self.dealer.hand, deck);
       self.player.hand = dealHand(1, self.player.hand, deck);
       self.dealer.hand = dealHand(1, self.dealer.hand, deck);
-    }
+    };
+
+    self.hit = function () {
+      console.log("Hit");
+      self.player.hand = dealHand(1, self.player.hand, self.deck);
+    };
   }]);
