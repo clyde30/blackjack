@@ -1,0 +1,40 @@
+body {
+  background-color: #145912;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+}
+.title {
+  color: white;
+}
+.cardContainer {
+  color: white;
+  width: 65%;
+  margin: auto;
+}
+.cardImage:hover {
+  width: 20%;
+  height: auto;
+}
+.cardImage {
+  width: 18%;
+  height: auto;
+}
+.hiddenCard {
+  width: 18%;
+  height: auto;
+  background-color: blue;
+}
+.winnerBox {
+  background-color: red;
+  color: white;
+}
+.chipBox {
+  background-color: white;
+  height: 50px;
+  width: 50px;
+  margin: auto;
+}
