@@ -12,15 +12,18 @@ function buildDeck(numDecks) {
   var suits = ["H", "D", "S", "C"];
   var deck = [];
 
-  for (var i = 1; i <= numDecks; i++) {
+for (var j = 0; j < numDecks; j++) {
+  for (var i = 0; i < suits.length; i++) {
     buildCardObjects(suits[i]);
   }
+}
 
   function buildCardObjects(suit) {
-    for(i=2; i<=14;i++){
+    for(var i=2; i<=14;i++){
         deck.push(new card(i,suit))
       }
     }
+
     return deck;
 };
 

@@ -1,4 +1,4 @@
 // create player object
-function Player() {
-  this.hand = [];
-};
+function Player(hand) {
+  this.hand = hand;
+}
