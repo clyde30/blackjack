@@ -18,10 +18,22 @@ angular.module('blackjackApp', [])
       self.dealer.hand = dealHand(1, self.dealer.hand, deck);
       self.player.hand = dealHand(1, self.player.hand, deck);
       self.dealer.hand = dealHand(1, self.dealer.hand, deck);
+
+      var playerValue = handValue(self.player.hand);
+      console.log(playerValue);
     };
 
     self.hit = function () {
       console.log("Hit");
       self.player.hand = dealHand(1, self.player.hand, self.deck);
+      var playerValue = handValue(self.player.hand);
+      console.log(playerValue);
+      if (playerValue > 21) {
+        console.log("Bust");
+      }
     };
+
+    self.stand = function () {
+      console.log("Stand");
+    }
   }]);
