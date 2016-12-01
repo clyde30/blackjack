@@ -28,7 +28,17 @@
 
 <button ng-click = "ctrl.initialDeal()">Deal</button>
 
-<div class = "cardContainer">
+<div>
+
+</div>
+
+<div ng-hide="showCards" class = "cardContainer">
+	<span>
+		<img ng-src = "images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
+	</span>
+</div>
+
+<div ng-show="showCards" class = "cardContainer">
 	<span ng-repeat = "card in ctrl.dealer.hand">
 		<img ng-src = "images/cards/{{card.image}}" class="cardImage">
 	</span>
@@ -39,9 +49,14 @@
 		<img ng-src = "images/cards/{{card.image}}" class="cardImage">
 	</span>
 </div>
+
+<div class="playerScore">
+	{{ctrl.player.playerValue}}
+</div>
+
 <div>
 	<button ng-click="ctrl.hit()">Hit</button>
-	<button ng-click="ctrl.stand()">Stand</button>
+	<button ng-click="ctrl.stand(); showCards = !showCards">Stand</button>
 </div>
 
 

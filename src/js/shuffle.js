@@ -1,10 +1,6 @@
 function shuffle(numDecks) {
-
   var deck = [];
-
   deck = buildDeck(numDecks);
-
-
   return shuffleDeck(deck);
 }
 
