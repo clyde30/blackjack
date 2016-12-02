@@ -19,6 +19,17 @@ function checkBust(handVal) {
 	}
 }
 
+function cardSum(cardArray) {
+	var sum = cardArray.reduce(function(a,b) {
+		return a + b;
+	}, 0);
+	return sum;
+}
+
+function revalueAce(val, cardArray) {
+
+}
+
 function handValue(hand) {
 	var cardArray = [];
 	var val = 0;
@@ -26,19 +37,13 @@ function handValue(hand) {
 			var card = hand[i];
 			cardArray.push(card.val);
 		}
-	for (var i = 0; i < cardArray.length; i++) {
-		val = val + cardArray[i]
-	}
-
+	val = cardSum(cardArray);
+	//Change Aces to ones if bust
 	for (var i = 0; val > 21 && i < cardArray.length; i++) {
 		if (cardArray[i] == 11) {
 			cardArray[i] = 1;
+			val = cardSum(cardArray);
 		}
-
-			val = 0;
-			for (var i = 0; i < cardArray.length; i++) {
-				val = val + cardArray[i]
-			}
-		}
+	}
 	return val;
 }
