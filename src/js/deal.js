@@ -39,11 +39,9 @@ function handValue(hand) {
 		}
 	val = cardSum(cardArray);
 	//Change Aces to ones if bust
-	for (var i = 0; val > 21 && i < cardArray.length; i++) {
-		if (cardArray[i] == 11) {
-			cardArray[i] = 1;
-			val = cardSum(cardArray);
-		}
+	while (val > 21 && cardArray.includes(11)) {
+		cardArray[cardArray.indexOf(11)] = 1;
+		val = cardSum(cardArray);
 	}
 	return val;
 }
