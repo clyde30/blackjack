@@ -26,10 +26,6 @@ function cardSum(cardArray) {
 	return sum;
 }
 
-function revalueAce(val, cardArray) {
-
-}
-
 function handValue(hand) {
 	var cardArray = [];
 	var val = 0;

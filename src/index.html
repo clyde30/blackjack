@@ -50,8 +50,12 @@
 	</span>
 </div>
 
-<div class="playerScore">
+<div class="playerScore" ng-show="!ctrl.player.isBust">
 	{{ctrl.player.playerValue}}
+</div>
+
+<div class="playerScore" ng-show="ctrl.player.isBust">
+	{{ctrl.player.playerValue}} Bust
 </div>
 
 <div>
