@@ -26,7 +26,7 @@
 <button ng-click = "ctrl.shuffle()">
   Shuffle Decks </button>
 
-<button ng-click = "ctrl.initialDeal()">Deal</button>
+<button ng-click = "ctrl.initialDeal(); showCards = false">Deal</button>
 
 <div>
 
@@ -60,10 +60,8 @@
 
 <div>
 	<button ng-click="ctrl.hit()">Hit</button>
-	<button ng-click="ctrl.stand(); showCards = !showCards">Stand</button>
+	<button ng-click="ctrl.stand(); showCards = true">Stand</button>
 </div>
-
-
 
 <script type="text/javascript" src="js/dealerApp.js"></script>
 <script type="text/javascript" src="js/shuffle.js"></script>
