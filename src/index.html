@@ -32,13 +32,13 @@
 
 </div>
 
-<div ng-hide="showCards" class = "cardContainer">
+<div ng-hide="showCards || ctrl.player.isBust" class = "cardContainer">
 	<span>
 		<img ng-src = "images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
 	</span>
 </div>
 
-<div ng-show="showCards" class = "cardContainer">
+<div ng-show="showCards || ctrl.player.isBust" class = "cardContainer">
 	<span ng-repeat = "card in ctrl.dealer.hand">
 		<img ng-src = "images/cards/{{card.image}}" class="cardImage">
 	</span>
