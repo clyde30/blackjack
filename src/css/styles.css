@@ -29,8 +29,12 @@ h4 {
   background-color: blue;
 }
 .winnerBox {
-  background-color: red;
+  padding-top: 20px;
+  font-size: 2em;
+  text-align: center;
   color: white;
+  width: 100%;
+  height: 100px;
 }
 .chipBox {
   background-color: white;
@@ -38,7 +42,7 @@ h4 {
   width: 50px;
   margin: auto;
 }
-.playerScore {
+.score {
   color: #FFFFFF;
   font-size: 50px;
 }

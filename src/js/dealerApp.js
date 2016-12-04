@@ -28,17 +28,30 @@ angular.module('blackjackApp', [])
       self.player.hand = dealHand(1, self.player.hand, self.deck);
       self.player.playerValue = handValue(self.player.hand);
       self.player.isBust = checkBust(self.player.playerValue);
+      if (self.player.isBust) {
+        self.push = false;
+        self.player.wins = false;
+        self.dealer.wins = true;
+      };
     };
 
     self.stand = function () {
       console.log("Stand");
       while (!checkBust(self.player.playerValue) && handValue(self.dealer.hand) < 17) {
-      self.dealer.hand = dealHand(1, self.dealer.hand, self.deck);
+        self.dealer.hand = dealHand(1, self.dealer.hand, self.deck);
       }
       self.dealer.dealerValue = handValue(self.dealer.hand);
       console.log(self.dealer.dealerValue);
-      if (checkBust(self.dealer.dealerValue)) {
-        console.log("Dealer Busts");
+      self.dealer.isBust = checkBust(self.dealer.dealerValue);
+      self.push = checkPush(self.dealer.dealerValue, self.player.playerValue);
+      if (self.dealer.isBust) {
+        self.player.wins = true;
+        self.dealer.wins = false;
+      }else {
+        if (!self.push) {
+          self.player.wins = playerWins(self.dealer.dealerValue, self.player.playerValue);
+          self.dealer.wins = dealerWins(self.dealer.dealerValue, self.player.playerValue);
+        }
       }
-    }
+    };
   }]);

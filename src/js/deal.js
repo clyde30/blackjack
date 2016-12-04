@@ -41,3 +41,21 @@ function handValue(hand) {
 	}
 	return val;
 }
+
+function checkPush(dealer, player) {
+	if (player === dealer) {
+		return true;
+	}else return false;
+}
+
+function playerWins(dealer, player) {
+	if (player > dealer) {
+		return true;
+	}else return false;
+}
+
+function dealerWins(dealer, player) {
+	if (player > dealer) {
+		return false;
+	}else return true;
+}
