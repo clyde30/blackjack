@@ -2,6 +2,8 @@ angular.module('blackjackApp', [])
 
   .controller('MainCtrl', [function() {
     var self = this;
+    self.bankroll = 1000;
+    self.bet = 0;
 
     self.shuffle = function () {
       var numDecks = self.numDecks;
@@ -10,6 +12,7 @@ angular.module('blackjackApp', [])
     };
 
     self.initialDeal = function () {
+      self.showWinnings = false;
       var deck = self.deck;
       console.log("Dealing");
       self.player = new Player();
@@ -22,6 +25,11 @@ angular.module('blackjackApp', [])
       console.log(self.player.playerValue);
     };
 
+    self.makeBet = function (val) {
+      self.bet = self.bet + val;
+      self.bankroll = self.bankroll - val;
+    }
+
     self.hit = function () {
       var playerVal;
       console.log("Hit");
@@ -32,6 +40,10 @@ angular.module('blackjackApp', [])
         self.push = false;
         self.player.wins = false;
         self.dealer.wins = true;
+        self.winnings = calculatedWinnings(self.bet, self.player.wins);
+        self.showWinnings = true;
+        self.bankroll = calculatedBankroll(self.bankroll, self.winnings);
+        self.bet = 0;
       };
     };
 
@@ -53,5 +65,9 @@ angular.module('blackjackApp', [])
           self.dealer.wins = dealerWins(self.dealer.dealerValue, self.player.playerValue);
         }
       }
+      self.winnings = calculatedWinnings(self.bet, self.player.wins);
+      self.showWinnings = true;
+      self.bankroll = calculatedBankroll(self.bankroll, self.winnings);
+      self.bet = 0;
     };
   }]);

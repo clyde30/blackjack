@@ -46,3 +46,14 @@ h4 {
   color: #FFFFFF;
   font-size: 50px;
 }
+.betBox {
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 1.2em;
+  background-color: blue;
+  opacity: 50%;
+  width: 1.5em;
+}
+.bankRoll {
+  color: #FFFFFF;
+}

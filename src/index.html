@@ -62,6 +62,14 @@
 	<div class="dealerWins" ng-show="ctrl.dealer.wins">
 		"Dealer Wins"
 	</div>
+
+	<div class="winnings" ng-show="ctrl.showWinnings">
+		{{ctrl.winnings}}
+	</div>
+</div>
+
+<div class="betBox">
+	{{ctrl.bet}}
 </div>
 
 <div class = "cardContainer">
@@ -83,6 +91,18 @@
 <div>
 	<button ng-click="ctrl.hit()">Hit</button>
 	<button ng-click="ctrl.stand(); showCards = true">Stand</button>
+</div>
+
+<div class="bets">
+	<button ng-click="ctrl.makeBet(1)">$1</button>
+	<button ng-click="ctrl.makeBet(5)">$5</button>
+	<button ng-click="ctrl.makeBet(25)">$25</button>
+	<button ng-click="ctrl.makeBet(50)">$50</button>
+	<button ng-click="ctrl.makeBet(100)">$100</button>
+</div>
+
+<div class="bankRoll">
+	{{ctrl.bankroll}}
 </div>
 
 <script type="text/javascript" src="js/dealerApp.js"></script>

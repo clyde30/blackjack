@@ -59,3 +59,17 @@ function dealerWins(dealer, player) {
 		return false;
 	}else return true;
 }
+
+function calculatedWinnings(bet, wins) {
+	if (wins) {
+		bet = bet * 2;
+	} else {
+		bet = 0;
+	}
+	return bet;
+}
+
+function calculatedBankroll(bankroll, winnings) {
+	var newBankroll = bankroll + winnings;
+	return newBankroll;
+}
