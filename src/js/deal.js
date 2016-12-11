@@ -73,3 +73,11 @@ function calculatedBankroll(bankroll, winnings) {
 	var newBankroll = bankroll + winnings;
 	return newBankroll;
 }
+function blackjack(hand) {
+	if (handValue(hand) === 21) {
+		return true;
+	}else {
+		return false;
+	}
+
+}

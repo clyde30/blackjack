@@ -22,6 +22,11 @@ angular.module('blackjackApp', [])
       self.player.hand = dealHand(1, self.player.hand, deck);
       self.dealer.hand = dealHand(1, self.dealer.hand, deck);
       self.player.playerValue = handValue(self.player.hand);
+      if (blackjack(self.player.hand)) {
+        self.player.wins = true;
+        self.dealer.wins = false;
+        self.endHand();
+      }
       console.log(self.player.playerValue);
     };
 
@@ -40,10 +45,8 @@ angular.module('blackjackApp', [])
         self.push = false;
         self.player.wins = false;
         self.dealer.wins = true;
-        self.winnings = calculatedWinnings(self.bet, self.player.wins);
-        self.showWinnings = true;
-        self.bankroll = calculatedBankroll(self.bankroll, self.winnings);
-        self.bet = 0;
+
+        self.endHand();
       };
     };
 
@@ -65,9 +68,14 @@ angular.module('blackjackApp', [])
           self.dealer.wins = dealerWins(self.dealer.dealerValue, self.player.playerValue);
         }
       }
+      self.endHand();
+    };
+
+    self.endHand = function () {
       self.winnings = calculatedWinnings(self.bet, self.player.wins);
       self.showWinnings = true;
       self.bankroll = calculatedBankroll(self.bankroll, self.winnings);
       self.bet = 0;
     };
+
   }]);
