@@ -10,10 +10,14 @@ h4 {
 .title {
   color: white;
 }
+.numDecks {
+  color: black;
+}
 .cardContainer {
   color: white;
   width: 65%;
   margin: auto;
+  padding: 10px;
 }
 .cardImage:hover {
   width: 20%;
