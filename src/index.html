@@ -1,91 +1,84 @@
 <!DOCTYPE html>
 <html ng-app = "blackjackApp">
 <head>
-	<title></title>
-<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<title>Blackjack</title>
 <script src="../bower_components/angular/angular.js"></script>
+<!-- Bootstrap -->
+<link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body ng-controller = "MainCtrl as ctrl">
-	<div class = "title">
-		<h1></h1>
-	</div>
-
-<div>
-  <h4>Number of Decks</h4>
-<select ng-model= "ctrl.numDecks">
-  <option value=1>One</option>
-  <option value=2>Two</option>
-  <option value=3>Three</option>
-  <option value=4>Four</option>
-  <option value=5>Five</option>
-  <option value=6>Six</option>
-</select>
-</div>
-
-<form>
-	<button ng-click = "ctrl.shuffle()" type="button">Shuffle Decks</button>
-	<button ng-click = "ctrl.initialDeal(); showCards = false" type="submit">Deal</button>
-</form>
-
-<div ng-hide="showCards || ctrl.player.isBust" class = "cardContainer">
-	<span>
-		<img ng-src = "images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
-	</span>
-</div>
-
-<div class="score">
-	<div class="winnerScore" ng-hide="ctrl.dealer.isBust">
-		{{ctrl.dealer.dealerValue}}
-	</div>
-
-	<div class="winnerScore" ng-show="ctrl.dealer.isBust">
-		{{ctrl.dealer.dealerValue}} Bust
-	</div>
-</div>
-
-<div ng-show="showCards || ctrl.player.isBust" class = "cardContainer">
-	<span ng-repeat = "card in ctrl.dealer.hand">
-		<img ng-src = "images/cards/{{card.image}}" class="cardImage">
-	</span>
-</div>
-
-<div class="winnerBox">
-	<div class="push" ng-show="ctrl.push">
-		"Push"
-	</div>
-
-	<div class="playerWins" ng-show="ctrl.player.wins">
-		"Player Wins"
-	</div>
-
-	<div class="dealerWins" ng-show="ctrl.dealer.wins">
-		"Dealer Wins"
-	</div>
-
-	<div class="winnings" ng-show="ctrl.showWinnings">
-		{{ctrl.winnings}}
-	</div>
-</div>
+	<div class="container">
+		<div class = "row title">
+			<div class="col-xs-3" "numDecks">
+  			<h4>Number of Decks</h4>
+				<select ng-model= "ctrl.numDecks">
+  				<option value=1>One</option>
+  				<option value=2>Two</option>
+  				<option value=3>Three</option>
+  				<option value=4>Four</option>
+  				<option value=5>Five</option>
+  				<option value=6>Six</option>
+				</select>
+				<form>
+					<button ng-click = "ctrl.shuffle()" type="button">Shuffle Decks</button>
+				</form>
+			</div>
+			<div class="col-xs-7 text-center">
+				<h1>Blackjack</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="dealerContainer">
+				<div class="col-xs-4 score dealerScore">
+					{{ctrl.dealer.dealerValue}}
+				</div>
+				<div ng-hide="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
+					<span>
+						<img ng-src = "images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
+					</span>
+				</div>
+				<div ng-show="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
+					<span ng-repeat = "card in ctrl.dealer.hand">
+						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="winnerBox">
+				<div class="push" ng-show="ctrl.push">
+					"Push"
+				</div>
+				<div class="playerWins" ng-show="ctrl.player.wins">
+					"Player Wins"
+				</div>
+				<div class="dealerWins" ng-show="ctrl.dealer.wins">
+					"Dealer Wins"
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="playerContainer">
+				<div class="col-xs-4 score playerScore">
+					<div ng-hide="ctrl.player.isBust">
+						{{ctrl.player.playerValue}}
+					</div>
+					<div ng-show="ctrl.player.isBust">
+						{{ctrl.player.playerValue}} Bust
+					</div>
+				</div>
+				<div class = "col-xs-8 cardContainer">
+					<span ng-repeat = "card in ctrl.player.hand">
+						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+					</span>
+				</div>
+			</div>
+		</div>
 
 <div class="betBox">
 	{{ctrl.bet}}
-</div>
-
-<div class = "cardContainer">
-	<span ng-repeat = "card in ctrl.player.hand">
-		<img ng-src = "images/cards/{{card.image}}" class="cardImage">
-	</span>
-</div>
-
-<div class="score">
-	<div class="playerScore" ng-hide="ctrl.player.isBust">
-		{{ctrl.player.playerValue}}
-	</div>
-
-	<div class="playerScore" ng-show="ctrl.player.isBust">
-		{{ctrl.player.playerValue}} Bust
-	</div>
 </div>
 
 <div>
@@ -101,14 +94,24 @@
 	<button ng-click="ctrl.makeBet(100)">$100</button>
 </div>
 
+<div class="deal">
+	<button ng-click = "ctrl.initialDeal(); showCards = false" type="submit">Deal</button>
+</div>
+
 <div class="bankRoll">
 	{{ctrl.bankroll}}
+</div>
 </div>
 
 <script type="text/javascript" src="js/dealerApp.js"></script>
 <script type="text/javascript" src="js/shuffle.js"></script>
 <script type="text/javascript" src="js/player.js"></script>
 <script type="text/javascript" src="js/deal.js"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
