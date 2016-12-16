@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/clyde30/blackjack/issues"
   },
-  "homepage": "https://github.com/clyde30/blackjack#readme"
+  "homepage": "https://github.com/clyde30/blackjack#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0"
+  }
 }
