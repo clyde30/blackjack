@@ -3,6 +3,7 @@
 <head>
 	<title>Blackjack</title>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/ngstorage/ngStorage.min.js"></script>
 <!-- Bootstrap -->
 <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="src/css/styles.css">
@@ -36,12 +37,12 @@
 				</div>
 				<div ng-hide="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
 					<span>
-						<img ng-src = "images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
+						<img ng-src = "src/images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
 					</span>
 				</div>
 				<div ng-show="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
 					<span ng-repeat = "card in ctrl.dealer.hand">
-						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
 			</div>
@@ -71,7 +72,7 @@
 				</div>
 				<div class = "col-xs-8 cardContainer">
 					<span ng-repeat = "card in ctrl.player.hand">
-						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
 			</div>
