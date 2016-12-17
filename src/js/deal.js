@@ -60,13 +60,19 @@ function dealerWins(dealer, player) {
 	}else return true;
 }
 
-function calculatedWinnings(bet, wins) {
+function calculatedWinnings(bet, wins, push, blackjack) {
+	var winnings = 0;
 	if (wins) {
-		bet = bet * 2;
-	} else {
-		bet = 0;
+		if (blackjack) {
+			winnings = bet *2.5;
+		}else {
+			winnings = bet * 2;
+		}
 	}
-	return bet;
+	if (push) {
+		winnings = bet;
+		}
+	return winnings;
 }
 
 function calculatedBankroll(bankroll, winnings) {
