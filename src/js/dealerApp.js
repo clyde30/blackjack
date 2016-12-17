@@ -1,8 +1,8 @@
-angular.module('blackjackApp', ['ngStorage'])
+var main = angular.module('blackjackApp', ['ngStorage'])
 
-  .controller('MainCtrl', [function($scope, $localStorage, $sessionStorage) {
+  main.controller('MainCtrl', function($scope, $localStorage, $sessionStorage) {
     var self = this;
-    self.sessionStorage = $localStorage;
+    self.storage = $localStorage;
     self.bet = 0;
     self.showDealButton = false;
 
@@ -11,6 +11,9 @@ angular.module('blackjackApp', ['ngStorage'])
       self.deck = shuffle(numDecks);
       console.log("Shuffled " + numDecks + " decks");
     };
+    self.resetBankroll = function () {
+      self.storage.bankroll = 1000;
+    }
 
     self.initialDeal = function () {
       self.showDealButton = false;
@@ -34,7 +37,7 @@ angular.module('blackjackApp', ['ngStorage'])
 
     self.makeBet = function (val) {
       self.bet = self.bet + val;
-      self.bankroll = self.bankroll - val;
+      self.storage.bankroll = self.storage.bankroll - val;
       self.showDealButton = true;
     }
 
@@ -82,4 +85,4 @@ angular.module('blackjackApp', ['ngStorage'])
       self.showDealButton = true;
     };
 
-  }]);
+  });
