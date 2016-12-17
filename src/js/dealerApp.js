@@ -80,7 +80,7 @@ var main = angular.module('blackjackApp', ['ngStorage'])
     self.endHand = function () {
       self.winnings = calculatedWinnings(self.bet, self.player.wins);
       self.showWinnings = true;
-      self.bankroll = calculatedBankroll(self.bankroll, self.winnings);
+      self.storage.bankroll = calculatedBankroll(self.storage.bankroll, self.winnings);
       self.bet = 0;
       self.showDealButton = true;
     };
