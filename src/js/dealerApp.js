@@ -1,8 +1,8 @@
-angular.module('blackjackApp', [])
+angular.module('blackjackApp', ['ngStorage'])
 
-  .controller('MainCtrl', [function() {
+  .controller('MainCtrl', [function($scope, $localStorage, $sessionStorage) {
     var self = this;
-    self.bankroll = 1000;
+    self.sessionStorage = $localStorage;
     self.bet = 0;
     self.showDealButton = false;
 
