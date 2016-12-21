@@ -1,6 +1,5 @@
-var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
+var app = angular.module('blackjackApp', ['firebase'])
 
-  // inject $firebaseAuth into our controller
   app.controller("AuthCtrl", ["$scope", "$firebaseAuth",
     function($scope, $firebaseAuth) {
       var auth = $firebaseAuth();
@@ -18,7 +17,7 @@ var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
     }
   ]);
 
-  app.controller('MainCtrl', function($scope, $firebaseObject, $localStorage, $sessionStorage) {
+  app.controller('MainCtrl', function($scope, $firebaseObject) {
 
     var ref = firebase.database().ref();
 
