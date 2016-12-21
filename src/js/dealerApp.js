@@ -32,8 +32,15 @@ var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
       $scope.deck = shuffle(numDecks);
       console.log("Shuffled " + numDecks + " decks");
     };
+
     $scope.resetBankroll = function () {
-      $scope.data.bankroll = 2000;
+      $scope.data.data.bankroll = 2000;
+
+      $scope.data.$save().then(function(ref) {
+        ref.key === $scope.data.$id; // true
+      }, function(error) {
+        console.log("Error:", error);
+      });
     }
 
     $scope.initialDeal = function () {
@@ -58,7 +65,7 @@ var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
 
     $scope.makeBet = function (val) {
       $scope.bet = $scope.bet + val;
-      $scope.bankroll = $scope.bankroll - val;
+      $scope.data.bankroll = $scope.data.bankroll - val;
       $scope.showDealButton = true;
     }
 
@@ -101,9 +108,15 @@ var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
     $scope.endHand = function () {
       $scope.winnings = calculatedWinnings($scope.bet, $scope.player.wins);
       $scope.showWinnings = true;
-      $scope.bankroll = calculatedBankroll($scope.bankroll, $scope.winnings);
+      $scope.data.bankroll = calculatedBankroll($scope.data.bankroll, $scope.winnings);
       $scope.bet = 0;
       $scope.showDealButton = true;
-    };
 
+      //send data to firebase
+      $scope.data.$save().then(function(ref) {
+        ref.key === $scope.data.$id; // true
+      }, function(error) {
+        console.log("Error:", error);
+      });
+    };
   });
