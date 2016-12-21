@@ -29,11 +29,12 @@ var app = angular.module('blackjackApp', ['firebase'])
     $scope.shuffle = function () {
       var numDecks = $scope.numDecks;
       $scope.deck = shuffle(numDecks);
+      $scope.shuffled = true;
       console.log("Shuffled " + numDecks + " decks");
     };
 
     $scope.resetBankroll = function () {
-      $scope.data.data.bankroll = 2000;
+      $scope.data.bankroll = 2000;
 
       $scope.data.$save().then(function(ref) {
         ref.key === $scope.data.$id; // true
@@ -44,6 +45,7 @@ var app = angular.module('blackjackApp', ['firebase'])
 
     $scope.initialDeal = function () {
       $scope.showDealButton = false;
+      $scope.noMoreBets = true;
       $scope.showWinnings = false;
       var deck = $scope.deck;
       console.log("Dealing");
@@ -65,7 +67,7 @@ var app = angular.module('blackjackApp', ['firebase'])
     $scope.makeBet = function (val) {
       $scope.bet = $scope.bet + val;
       $scope.data.bankroll = $scope.data.bankroll - val;
-      $scope.showDealButton = true;
+      $scope.madeBet = true;
     }
 
     $scope.hit = function () {
@@ -109,7 +111,8 @@ var app = angular.module('blackjackApp', ['firebase'])
       $scope.showWinnings = true;
       $scope.data.bankroll = calculatedBankroll($scope.data.bankroll, $scope.winnings);
       $scope.bet = 0;
-      $scope.showDealButton = true;
+      $scope.madeBet = false;
+      $scope.noMoreBets = false;
 
       //send data to firebase
       $scope.data.$save().then(function(ref) {

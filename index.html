@@ -99,16 +99,16 @@
 			</div>
 		</div>
 
-<div class="betBox">
+<div class="betBox" ng-show="madeBet">
 	{{bet}}
 </div>
 
-<div>
+<div ng-show="noMoreBets">
 	<button ng-click="hit()">Hit</button>
 	<button ng-click="stand(); showCards = true">Stand</button>
 </div>
 
-<div class="bets">
+<div class="bets" ng-show="shuffled && !noMoreBets">
 	<button ng-click="makeBet(1)">$1</button>
 	<button ng-click="makeBet(5)">$5</button>
 	<button ng-click="makeBet(25)">$25</button>
@@ -117,12 +117,12 @@
 </div>
 
 <div class="deal">
-	<button ng-show="showDealButton" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
+	<button ng-show="!noMoreBets && shuffled && madeBet" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
 </div>
 
 <div class="bankRoll">
 	{{data.bankroll}}
-	<button ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
+	<button ng-show="!data.bankroll>0" ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
 </div>
 </div>
 
