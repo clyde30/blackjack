@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html ng-app = "blackjackApp">
+<html>
 <head>
 	<title>Blackjack</title>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/ngstorage/ngStorage.min.js"></script>
-<!-- Bootstrap -->
-<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="src/css/styles.css">
+
+	<!-- AngularJS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<!-- Firebase -->
+	<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script> -->
+	<!-- AngularFire -->
+	<script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
+
+	<!-- FirebaseUI for Web — Auth -->
+	<script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
+
+	<script src="bower_components/ngstorage/ngStorage.min.js"></script>
+	<script type="text/javascript" src="src/js/dealerApp.js"></script>
+
+	<!-- Bootstrap -->
+	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="src/css/styles.css">
 </head>
 
-<body ng-controller = "MainCtrl as ctrl">
-	<div class="container">
+<body ng-app="blackjackApp">
+	<div ng-controller="AuthCtrl">
+  	<button ng-click="signIn()">Sign In Anonymously</button>
+
+  	<p ng-if="firebaseUser">Signed in user: <strong>{{ firebaseUser.uid }}</strong></p>
+  	<p ng-if="error">Error: <strong>{{ error }}</strong></p>
+	</div>
+
+	<div ng-controller="MainCtrl" class="container">
 		<div class = "row title">
 			<div class="col-xs-3" "numDecks">
   			<h4>Number of Decks</h4>
-				<select ng-model= "ctrl.numDecks">
+				<select ng-model= "numDecks">
   				<option value=1>One</option>
   				<option value=2>Two</option>
   				<option value=3>Three</option>
@@ -23,25 +44,28 @@
   				<option value=6>Six</option>
 				</select>
 				<form>
-					<button ng-click = "ctrl.shuffle()" type="button">Shuffle Decks</button>
+					<button ng-click = "shuffle()" type="button">Shuffle Decks</button>
 				</form>
 			</div>
 			<div class="col-xs-7 text-center">
 				<h1>Blackjack</h1>
+				<div>
+					{{data.bankroll}}
+				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="dealerContainer">
 				<div class="col-xs-4 score dealerScore">
-					{{ctrl.dealer.dealerValue}}
+					{{dealer.dealerValue}}
 				</div>
-				<div ng-hide="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
+				<div ng-hide="showCards || player.isBust" class = "col-xs-8 cardContainer">
 					<span>
-						<img ng-src = "src/images/cards/{{ctrl.dealer.hand[0].image}}" class="cardImage">
+						<img ng-src = "src/images/cards/{{dealer.hand[0].image}}" class="cardImage">
 					</span>
 				</div>
-				<div ng-show="showCards || ctrl.player.isBust" class = "col-xs-8 cardContainer">
-					<span ng-repeat = "card in ctrl.dealer.hand">
+				<div ng-show="showCards || player.isBust" class = "col-xs-8 cardContainer">
+					<span ng-repeat = "card in dealer.hand">
 						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
@@ -49,13 +73,13 @@
 		</div>
 		<div class="row">
 			<div class="winnerBox">
-				<div class="push" ng-show="ctrl.push">
+				<div class="push" ng-show="push">
 					"Push"
 				</div>
-				<div class="playerWins" ng-show="ctrl.player.wins">
+				<div class="playerWins" ng-show="player.wins">
 					"Player Wins"
 				</div>
-				<div class="dealerWins" ng-show="ctrl.dealer.wins">
+				<div class="dealerWins" ng-show="dealer.wins">
 					"Dealer Wins"
 				</div>
 			</div>
@@ -63,15 +87,15 @@
 		<div class="row">
 			<div class="playerContainer">
 				<div class="col-xs-4 score playerScore">
-					<div ng-hide="ctrl.player.isBust">
-						{{ctrl.player.playerValue}}
+					<div ng-hide="player.isBust">
+						{{player.playerValue}}
 					</div>
-					<div ng-show="ctrl.player.isBust">
-						{{ctrl.player.playerValue}} Bust
+					<div ng-show="player.isBust">
+						{{player.playerValue}} Bust
 					</div>
 				</div>
 				<div class = "col-xs-8 cardContainer">
-					<span ng-repeat = "card in ctrl.player.hand">
+					<span ng-repeat = "card in player.hand">
 						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
@@ -79,33 +103,44 @@
 		</div>
 
 <div class="betBox">
-	{{ctrl.bet}}
+	{{bet}}
 </div>
 
 <div>
-	<button ng-click="ctrl.hit()">Hit</button>
-	<button ng-click="ctrl.stand(); showCards = true">Stand</button>
+	<button ng-click="hit()">Hit</button>
+	<button ng-click="stand(); showCards = true">Stand</button>
 </div>
 
 <div class="bets">
-	<button ng-click="ctrl.makeBet(1)">$1</button>
-	<button ng-click="ctrl.makeBet(5)">$5</button>
-	<button ng-click="ctrl.makeBet(25)">$25</button>
-	<button ng-click="ctrl.makeBet(50)">$50</button>
-	<button ng-click="ctrl.makeBet(100)">$100</button>
+	<button ng-click="makeBet(1)">$1</button>
+	<button ng-click="makeBet(5)">$5</button>
+	<button ng-click="makeBet(25)">$25</button>
+	<button ng-click="makeBet(50)">$50</button>
+	<button ng-click="makeBet(100)">$100</button>
 </div>
 
 <div class="deal">
-	<button ng-show="ctrl.showDealButton" ng-click = "ctrl.initialDeal(); showCards = false" type="submit">Deal</button>
+	<button ng-show="showDealButton" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
 </div>
 
 <div class="bankRoll">
-	{{ctrl.storage.bankroll}}
-	<button ng-click="ctrl.resetBankroll()" type="button" name="button">Reset Bankroll</button>
+	{{data.bankroll}}
+	<button ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
 </div>
 </div>
 
-<script type="text/javascript" src="src/js/dealerApp.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDX_-0Gp8CRhARYgVlJ__KI3oOdiOYWtCw",
+    authDomain: "blackjackapp-6959d.firebaseapp.com",
+    databaseURL: "https://blackjackapp-6959d.firebaseio.com",
+    storageBucket: "blackjackapp-6959d.appspot.com",
+    messagingSenderId: "651553942495"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <script type="text/javascript" src="src/js/shuffle.js"></script>
 <script type="text/javascript" src="src/js/player.js"></script>
 <script type="text/javascript" src="src/js/deal.js"></script>

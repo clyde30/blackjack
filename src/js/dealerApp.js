@@ -1,88 +1,109 @@
-var main = angular.module('blackjackApp', ['ngStorage'])
+var app = angular.module('blackjackApp', ['ngStorage', 'firebase'])
 
-  main.controller('MainCtrl', function($scope, $localStorage, $sessionStorage) {
-    var self = this;
-    self.storage = $localStorage;
-    self.bet = 0;
-    self.showDealButton = false;
+  // inject $firebaseAuth into our controller
+  app.controller("AuthCtrl", ["$scope", "$firebaseAuth",
+    function($scope, $firebaseAuth) {
+      var auth = $firebaseAuth();
 
-    self.shuffle = function () {
-      var numDecks = self.numDecks;
-      self.deck = shuffle(numDecks);
+      $scope.signIn = function() {
+        $scope.firebaseUser = null;
+        $scope.error = null;
+
+        auth.$signInAnonymously().then(function(firebaseUser) {
+          $scope.firebaseUser = firebaseUser;
+        }).catch(function(error) {
+          $scope.error = error;
+        });
+      };
+    }
+  ]);
+
+  app.controller('MainCtrl', function($scope, $firebaseObject, $localStorage, $sessionStorage) {
+
+    var ref = firebase.database().ref();
+
+    $scope.data = $firebaseObject(ref);
+
+    $scope.bet = 0;
+    $scope.showDealButton = false;
+
+    $scope.shuffle = function () {
+      var numDecks = $scope.numDecks;
+      $scope.deck = shuffle(numDecks);
       console.log("Shuffled " + numDecks + " decks");
     };
-    self.resetBankroll = function () {
-      self.storage.bankroll = 1000;
+    $scope.resetBankroll = function () {
+      $scope.data.bankroll = 2000;
     }
 
-    self.initialDeal = function () {
-      self.showDealButton = false;
-      self.showWinnings = false;
-      var deck = self.deck;
+    $scope.initialDeal = function () {
+      $scope.showDealButton = false;
+      $scope.showWinnings = false;
+      var deck = $scope.deck;
       console.log("Dealing");
-      self.player = new Player();
-      self.dealer = new Player();
-      self.player.hand = dealHand(1, self.player.hand, deck);
-      self.dealer.hand = dealHand(1, self.dealer.hand, deck);
-      self.player.hand = dealHand(1, self.player.hand, deck);
-      self.dealer.hand = dealHand(1, self.dealer.hand, deck);
-      self.player.playerValue = handValue(self.player.hand);
-      if (blackjack(self.player.hand)) {
-        self.player.wins = true;
-        self.dealer.wins = false;
-        self.endHand();
+      $scope.player = new Player();
+      $scope.dealer = new Player();
+      $scope.player.hand = dealHand(1, $scope.player.hand, deck);
+      $scope.dealer.hand = dealHand(1, $scope.dealer.hand, deck);
+      $scope.player.hand = dealHand(1, $scope.player.hand, deck);
+      $scope.dealer.hand = dealHand(1, $scope.dealer.hand, deck);
+      $scope.player.playerValue = handValue($scope.player.hand);
+      if (blackjack($scope.player.hand)) {
+        $scope.player.wins = true;
+        $scope.dealer.wins = false;
+        $scope.endHand();
       }
-      console.log(self.player.playerValue);
+      console.log($scope.player.playerValue);
     };
 
-    self.makeBet = function (val) {
-      self.bet = self.bet + val;
-      self.storage.bankroll = self.storage.bankroll - val;
-      self.showDealButton = true;
+    $scope.makeBet = function (val) {
+      $scope.bet = $scope.bet + val;
+      $scope.bankroll = $scope.bankroll - val;
+      $scope.showDealButton = true;
     }
 
-    self.hit = function () {
+    $scope.hit = function () {
       var playerVal;
       console.log("Hit");
-      self.player.hand = dealHand(1, self.player.hand, self.deck);
-      self.player.playerValue = handValue(self.player.hand);
-      self.player.isBust = checkBust(self.player.playerValue);
-      if (self.player.isBust) {
-        self.push = false;
-        self.player.wins = false;
-        self.dealer.wins = true;
+      $scope.player.hand = dealHand(1, $scope.player.hand, $scope.deck);
+      $scope.player.playerValue = handValue($scope.player.hand);
+      $scope.player.isBust = checkBust($scope.player.playerValue);
+      if ($scope.player.isBust) {
+        $scope.push = false;
+        $scope.player.wins = false;
+        $scope.dealer.wins = true;
 
-        self.endHand();
+        $scope.endHand();
       };
     };
 
-    self.stand = function () {
+    $scope.stand = function () {
       console.log("Stand");
-      while (!checkBust(self.player.playerValue) && handValue(self.dealer.hand) < 17) {
-        self.dealer.hand = dealHand(1, self.dealer.hand, self.deck);
+      while (!checkBust($scope.player.playerValue) && handValue($scope.dealer.hand) < 17) {
+        $scope.dealer.hand = dealHand(1, $scope.dealer.hand, $scope.deck);
       }
-      self.dealer.dealerValue = handValue(self.dealer.hand);
-      console.log(self.dealer.dealerValue);
-      self.dealer.isBust = checkBust(self.dealer.dealerValue);
-      self.push = checkPush(self.dealer.dealerValue, self.player.playerValue);
-      if (self.dealer.isBust) {
-        self.player.wins = true;
-        self.dealer.wins = false;
+      $scope.dealer.dealerValue = handValue($scope.dealer.hand);
+      console.log($scope.dealer.dealerValue);
+      $scope.dealer.isBust = checkBust($scope.dealer.dealerValue);
+      $scope.push = checkPush($scope.dealer.dealerValue, $scope.player.playerValue);
+      if ($scope.dealer.isBust) {
+        $scope.player.wins = true;
+        $scope.dealer.wins = false;
       }else {
-        if (!self.push) {
-          self.player.wins = playerWins(self.dealer.dealerValue, self.player.playerValue);
-          self.dealer.wins = dealerWins(self.dealer.dealerValue, self.player.playerValue);
+        if (!$scope.push) {
+          $scope.player.wins = playerWins($scope.dealer.dealerValue, $scope.player.playerValue);
+          $scope.dealer.wins = dealerWins($scope.dealer.dealerValue, $scope.player.playerValue);
         }
       }
-      self.endHand();
+      $scope.endHand();
     };
 
-    self.endHand = function () {
-      self.winnings = calculatedWinnings(self.bet, self.player.wins);
-      self.showWinnings = true;
-      self.storage.bankroll = calculatedBankroll(self.storage.bankroll, self.winnings);
-      self.bet = 0;
-      self.showDealButton = true;
+    $scope.endHand = function () {
+      $scope.winnings = calculatedWinnings($scope.bet, $scope.player.wins);
+      $scope.showWinnings = true;
+      $scope.bankroll = calculatedBankroll($scope.bankroll, $scope.winnings);
+      $scope.bet = 0;
+      $scope.showDealButton = true;
     };
 
   });
