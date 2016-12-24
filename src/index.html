@@ -5,9 +5,10 @@
 
 	<!-- AngularJS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
 	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-	<!-- <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script> -->
+
 	<!-- AngularFire -->
 	<script src="https://cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
 
@@ -15,13 +16,29 @@
 	<script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
 
-	<!-- <script src="bower_components/ngstorage/ngStorage.min.js"></script> -->
-	<!-- <script type="text/javascript" src="js/dealerApp.js"></script> -->
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+
+
 	<script type="text/javascript" src="js/app.js"></script>
 
-	<!-- Bootstrap -->
-	<!-- <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-	<!-- <link rel="stylesheet" type="text/css" href="src/css/styles.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/main.min.css">
 </head>
 
@@ -60,12 +77,12 @@
 				</div>
 				<div ng-hide="showCards || player.isBust" class = "col-xs-8 cardContainer">
 					<span>
-						<img ng-src = "src/images/cards/{{dealer.hand[0].image}}" class="cardImage">
+						<img ng-src = "images/cards/{{dealer.hand[0].image}}" class="cardImage">
 					</span>
 				</div>
 				<div ng-show="showCards || player.isBust" class = "col-xs-8 cardContainer">
 					<span ng-repeat = "card in dealer.hand">
-						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
+						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
 			</div>
@@ -95,7 +112,7 @@
 				</div>
 				<div class = "col-xs-8 cardContainer">
 					<span ng-repeat = "card in player.hand">
-						<img ng-src = "src/images/cards/{{card.image}}" class="cardImage">
+						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
 					</span>
 				</div>
 			</div>
@@ -139,15 +156,5 @@
   };
   firebase.initializeApp(config);
 </script>
-
-<!-- <script type="text/javascript" src="src/js/shuffle.js"></script>
-<script type="text/javascript" src="src/js/player.js"></script>
-<script type="text/javascript" src="src/js/deal.js"></script>
- -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!-- <script src="bower_components/jquery/dist/jquery.min.js"></script> -->
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<!-- <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
-
 </body>
 </html>
