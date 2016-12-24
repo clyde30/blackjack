@@ -6,10 +6,20 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify');
   concat = require('gulp-concat');
   rename = require('gulp-rename');
+  ngAnnotate = require('gulp-ng-annotate');
 
 gulp.task('webserver', function() {
-  connect.server();
+  connect.server({
+    root:'public',
+    livereload:true
+  })
 });
+
+gulp.task('html', function () {
+  return gulp.src('src/index.html')
+  .pipe(gulp.dest('public'))
+  .pipe(connect.reload())
+})
 
 gulp.task('less', function() {
   return gulp.src('src/less/**/*.less')
@@ -17,17 +27,19 @@ gulp.task('less', function() {
     .pipe(cleanCSS())
     .pipe(concat('main.css'))
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('public/css'));
+    .pipe(gulp.dest('public/css'))
+    .pipe(connect.reload())
 });
 
 gulp.task('js', function () {
   gulp.src('src/js/**/*.js')
   .pipe(jshint())
   .pipe(jshint.reporter('jshint-stylish'))
-  .pipe(uglify())
   .pipe(concat('app.js'))
-  .pipe(rename({suffix: '.min'}))
+  .pipe(ngAnnotate())
+  .pipe(uglify())
   .pipe(gulp.dest('public/js'))
+  .pipe(connect.reload())
 });
 
 gulp.task('jshint', function() {
@@ -39,6 +51,7 @@ gulp.task('jshint', function() {
 gulp.task('watch', function() {
   gulp.watch('src/js/**/*.js', ['js']);
   gulp.watch('src/less/**/*.less', ['less']);
+  gulp.watch('src/**/*.html', ['html']);
 });
 
-gulp.task('default', ['webserver', 'watch']);
+gulp.task('start', ['webserver', 'watch']);

@@ -23,6 +23,7 @@
     "gulp-connect": "^5.0.0",
     "gulp-jshint": "^2.0.4",
     "gulp-less": "^3.3.0",
+    "gulp-ng-annotate": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.0",
     "jshint": "^2.9.4",
