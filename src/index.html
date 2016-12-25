@@ -44,7 +44,7 @@
 
 <body ng-app="blackjackApp">
 	<div ng-controller="AuthCtrl">
-  	<button ng-click="signIn()">Sign In Anonymously</button>
+  	<button class="button" ng-click="signIn()">Sign In Anonymously</button>
 
   	<p ng-if="firebaseUser">Signed in user: <strong>{{ firebaseUser.uid }}</strong></p>
   	<p ng-if="error">Error: <strong>{{ error }}</strong></p>
@@ -52,19 +52,21 @@
 
 	<div ng-controller="MainCtrl" class="container">
 		<div class = "row title">
-			<div class="col-xs-3" "numDecks">
+			<div class="col-xs-3">
   			<h4>Number of Decks</h4>
-				<select ng-model= "numDecks">
-  				<option value=1>One</option>
-  				<option value=2>Two</option>
-  				<option value=3>Three</option>
-  				<option value=4>Four</option>
-  				<option value=5>Five</option>
-  				<option value=6>Six</option>
-				</select>
-				<form>
+				<div class="selectDecks button">
+					<select ng-model= "numDecks">
+						<option value=1>One</option>
+						<option value=2>Two</option>
+						<option value=3>Three</option>
+						<option value=4>Four</option>
+						<option value=5>Five</option>
+						<option value=6>Six</option>
+					</select>
+				</div>
+				<div class="button">
 					<button ng-click = "shuffle()" type="button">Shuffle Decks</button>
-				</form>
+				</div>
 			</div>
 			<div class="col-xs-7 text-center">
 				<h1>Blackjack</h1>
@@ -118,32 +120,32 @@
 			</div>
 		</div>
 
-<div class="betBox" ng-show="madeBet">
-	{{bet}}
-</div>
+		<div class="betBox" ng-show="madeBet">
+			{{bet}}
+		</div>
 
-<div ng-show="noMoreBets">
-	<button ng-click="hit()">Hit</button>
-	<button ng-click="stand(); showCards = true">Stand</button>
-</div>
+		<div class="button" ng-show="noMoreBets">
+			<button ng-click="hit()">Hit</button>
+			<button ng-click="stand(); showCards = true">Stand</button>
+		</div>
 
-<div class="bets" ng-show="shuffled && !noMoreBets">
-	<button ng-click="makeBet(1)">$1</button>
-	<button ng-click="makeBet(5)">$5</button>
-	<button ng-click="makeBet(25)">$25</button>
-	<button ng-click="makeBet(50)">$50</button>
-	<button ng-click="makeBet(100)">$100</button>
-</div>
+		<div class="bets button" ng-show="shuffled && !noMoreBets">
+			<button ng-click="makeBet(1)">$1</button>
+			<button ng-click="makeBet(5)">$5</button>
+			<button ng-click="makeBet(25)">$25</button>
+			<button ng-click="makeBet(50)">$50</button>
+			<button ng-click="makeBet(100)">$100</button>
+		</div>
 
-<div class="deal">
-	<button ng-show="!noMoreBets && shuffled && madeBet" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
-</div>
+		<div class="deal button">
+			<button ng-show="!noMoreBets && shuffled && madeBet" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
+		</div>
 
-<div class="bankRoll">
-	{{data.bankroll}}
-	<button ng-show="!data.bankroll>0" ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
-</div>
-</div>
+		<div class="bankRoll">
+			{{data.bankroll}}
+			<button class="button" ng-show="!data.bankroll>0" ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
+		</div>
+	</div>
 
 <script>
   // Initialize Firebase
