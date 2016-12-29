@@ -65,6 +65,10 @@ var app = angular.module('blackjackApp', ['firebase'])
     };
 
     $scope.makeBet = function (val) {
+      if ($scope.player && $scope.dealer != undefined) {
+        $scope.player.hand = [];
+        $scope.dealer.hand = [];
+      }
       $scope.bet = $scope.bet + val;
       $scope.data.bankroll = $scope.data.bankroll - val;
       $scope.madeBet = true;

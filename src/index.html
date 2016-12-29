@@ -43,110 +43,122 @@
 </head>
 
 <body ng-app="blackjackApp">
-	<div ng-controller="AuthCtrl">
-  	<button class="button" ng-click="signIn()">Sign In Anonymously</button>
-
-  	<p ng-if="firebaseUser">Signed in user: <strong>{{ firebaseUser.uid }}</strong></p>
-  	<p ng-if="error">Error: <strong>{{ error }}</strong></p>
-	</div>
-
-	<div ng-controller="MainCtrl" class="container">
-		<div class = "row title">
-			<div class="col-xs-3">
-  			<h4>Number of Decks</h4>
-				<div class="selectDecks button">
-					<select ng-model= "numDecks">
-						<option value=1>One</option>
-						<option value=2>Two</option>
-						<option value=3>Three</option>
-						<option value=4>Four</option>
-						<option value=5>Five</option>
-						<option value=6>Six</option>
-					</select>
-				</div>
-				<div class="button">
-					<button ng-click = "shuffle()" type="button">Shuffle Decks</button>
-				</div>
-			</div>
-			<div class="col-xs-7 text-center">
+	<div class="container wrapper">
+		<div class="nav row">
+			<div class="col-xs-8 title">
 				<h1>Blackjack</h1>
 			</div>
-		</div>
-		<div class="row">
-			<div class="dealerContainer">
-				<div class="col-xs-4 score dealerScore">
-					{{dealer.dealerValue}}
-				</div>
-				<div ng-hide="showCards || player.isBust" class = "col-xs-8 cardContainer">
-					<span>
-						<img ng-src = "images/cards/{{dealer.hand[0].image}}" class="cardImage">
-					</span>
-				</div>
-				<div ng-show="showCards || player.isBust" class = "col-xs-8 cardContainer">
-					<span ng-repeat = "card in dealer.hand">
-						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
-					</span>
-				</div>
+			<div class="col-xs-4" ng-contr4ller="AuthCtrl">
+				<button class="button" ng-click="signIn()">Sign In Anonymously</button>
+				<p ng-if="firebaseUser">Signed in user: <strong>{{ firebaseUser.uid }}</strong></p>
+				<p ng-if="error">Error: <strong>{{ error }}</strong></p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="winnerBox">
-				<div class="push" ng-show="push">
-					"Push"
+		<div class="row" ng-controller="MainCtrl">
+			<div class="col-xs-2 aside">
+				<div class="bankRoll">
+					<span>Bankroll:</span>
+					${{data.bankroll}}
+					<button class="button" ng-show="!data.bankroll>0" ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
 				</div>
-				<div class="playerWins" ng-show="player.wins">
-					"Player Wins"
-				</div>
-				<div class="dealerWins" ng-show="dealer.wins">
-					"Dealer Wins"
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="playerContainer">
-				<div class="col-xs-4 score playerScore">
-					<div ng-hide="player.isBust">
-						{{player.playerValue}}
+				<div ng-show="!shuffled">
+					<div>
+						<h4>Number of Decks</h4>
 					</div>
-					<div ng-show="player.isBust">
-						{{player.playerValue}} Bust
+					<div class="selectDecks button">
+						<select ng-model= "numDecks">
+							<option value=1>One</option>
+							<option value=2>Two</option>
+							<option value=3>Three</option>
+							<option value=4>Four</option>
+							<option value=5>Five</option>
+							<option value=6>Six</option>
+						</select>
+					</div>
+					<div class="button">
+						<button ng-click = "shuffle()" type="button">Shuffle Decks</button>
 					</div>
 				</div>
-				<div class = "col-xs-8 cardContainer">
-					<span ng-repeat = "card in player.hand">
-						<img ng-src = "images/cards/{{card.image}}" class="cardImage">
-					</span>
+			</div>
+			<div class="cardBox col-xs-9">
+				<div>
+					<div class="row dealerContainer">
+						<div class="col-xs-2 score dealerScore">
+							{{dealer.dealerValue}}
+						</div>
+						<div class ="col-xs-10 cardContainer" ng-hide="showCards || player.isBust">
+							<span>
+								<img ng-src = "images/cards/{{dealer.hand[0].image}}" class="cardImage">
+							</span>
+						</div>
+						<div  class="col-xs-10 cardContainer" ng-show="showCards || player.isBust">
+							<span ng-repeat = "card in dealer.hand">
+								<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+							</span>
+						</div>
+					</div>
+					<div class="row middleBox">
+						<div>
+								<div class="col-xs-offset-2">
+									<div class="chipsWon col-xs-2">
+										<div class="betBox" ng-show="player.wins">
+											{{won}}
+										</div>
+									</div>
+									<div class="chipBox col-xs-2" ng-show="madeBet || player.wins">
+										<div class="betBox">
+											{{bet}}
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6 winnerBox">
+								<div class="push" ng-show="push && !madeBet">
+									"Push"
+								</div>
+								<div class="playerWins" ng-show="player.wins && !madeBet">
+									"Player Wins"
+								</div>
+								<div class="dealerWins" ng-show="dealer.wins && !madeBet">
+									"Dealer Wins"
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="playerContainer">
+							<div class="col-xs-2 score playerScore">
+								<div ng-hide="player.isBust">
+									{{player.playerValue}}
+								</div>
+								<div ng-show="player.isBust">
+									{{player.playerValue}} Bust
+								</div>
+							</div>
+							<div class = "col-xs-10 cardContainer">
+								<span ng-repeat = "card in player.hand">
+									<img ng-src = "images/cards/{{card.image}}" class="cardImage">
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="button" ng-show="noMoreBets">
+					<button ng-click="hit()">Hit</button>
+					<button ng-click="stand(); showCards = true">Stand</button>
+				</div>
+				<div class="bets button" ng-show="shuffled && !noMoreBets">
+					<button ng-click="makeBet(1)">$1</button>
+					<button ng-click="makeBet(5)">$5</button>
+					<button ng-click="makeBet(25)">$25</button>
+					<button ng-click="makeBet(50)">$50</button>
+					<button ng-click="makeBet(100)">$100</button>
+				</div>
+				<div class="deal button">
+					<button ng-show="!noMoreBets && shuffled && madeBet" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
 				</div>
 			</div>
-		</div>
-
-		<div class="betBox" ng-show="madeBet">
-			{{bet}}
-		</div>
-
-		<div class="button" ng-show="noMoreBets">
-			<button ng-click="hit()">Hit</button>
-			<button ng-click="stand(); showCards = true">Stand</button>
-		</div>
-
-		<div class="bets button" ng-show="shuffled && !noMoreBets">
-			<button ng-click="makeBet(1)">$1</button>
-			<button ng-click="makeBet(5)">$5</button>
-			<button ng-click="makeBet(25)">$25</button>
-			<button ng-click="makeBet(50)">$50</button>
-			<button ng-click="makeBet(100)">$100</button>
-		</div>
-
-		<div class="deal button">
-			<button ng-show="!noMoreBets && shuffled && madeBet" ng-click = "initialDeal(); showCards = false" type="submit">Deal</button>
-		</div>
-
-		<div class="bankRoll">
-			{{data.bankroll}}
-			<button class="button" ng-show="!data.bankroll>0" ng-click="resetBankroll()" type="button" name="button">Reset Bankroll</button>
 		</div>
 	</div>
-
 <script>
   // Initialize Firebase
   var config = {
