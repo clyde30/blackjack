@@ -83,12 +83,12 @@
 			<div class="cardBox col-xs-9">
 				<div>
 					<div class="row dealerContainer">
-						<div class="col-xs-2 score dealerScore">
+						<div ng-show="!madeBet" class="col-xs-2 score dealerScore">
 							{{dealer.dealerValue}}
 						</div>
-						<div class ="col-xs-10 cardContainer" ng-hide="showCards || player.isBust">
+						<div ng-hide="showCards || player.isBust" class="col-xs-10 cardContainer" >
 							<span>
-								<img ng-src = "images/cards/{{dealer.hand[0].image}}" class="cardImage">
+								<img ng-src="images/cards/{{dealer.hand[0].image}}" class="cardImage">
 							</span>
 						</div>
 						<div  class="col-xs-10 cardContainer" ng-show="showCards || player.isBust">
@@ -102,7 +102,7 @@
 								<div class="col-xs-offset-2">
 									<div class="chipsWon col-xs-2">
 										<div class="betBox" ng-show="player.wins">
-											{{won}}
+											{{winnings}}
 										</div>
 									</div>
 									<div class="chipBox col-xs-2" ng-show="madeBet || player.wins">
@@ -126,7 +126,7 @@
 					</div>
 					<div class="row">
 						<div class="playerContainer">
-							<div class="col-xs-2 score playerScore">
+							<div ng-show="showPlayerScore" class="col-xs-2 score playerScore">
 								<div ng-hide="player.isBust">
 									{{player.playerValue}}
 								</div>
