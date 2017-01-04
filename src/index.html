@@ -101,11 +101,11 @@
 						<div>
 								<div class="col-xs-offset-2">
 									<div class="chipsWon col-xs-2">
-										<div class="betBox" ng-show="player.wins">
+										<div class="betBox" ng-show="player.wins && !madeBet">
 											{{winnings}}
 										</div>
 									</div>
-									<div class="chipBox col-xs-2" ng-show="madeBet || player.wins">
+									<div class="chipBox col-xs-2" ng-show="madeBet">
 										<div class="betBox">
 											{{bet}}
 										</div>
