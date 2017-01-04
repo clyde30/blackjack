@@ -43,7 +43,7 @@ app.controller('MainCtrl', function($scope, $firebaseObject) {
     }, function(error) {
       console.log("Error:", error);
     });
-  }
+  };
 
   $scope.initialDeal = function () {
     $scope.showDealButton = false;
@@ -69,7 +69,7 @@ app.controller('MainCtrl', function($scope, $firebaseObject) {
 
   $scope.makeBet = function (val) {
     $scope.showPlayerScore = false;
-    if ($scope.player && $scope.dealer != undefined) {
+    if ($scope.player && $scope.dealer !== undefined) {
       $scope.player.hand = [];
       $scope.dealer.hand = [];
       $scope.showPlayerScore = false;
@@ -77,7 +77,7 @@ app.controller('MainCtrl', function($scope, $firebaseObject) {
     $scope.bet = $scope.bet + val;
     $scope.data.bankroll = $scope.data.bankroll - val;
     $scope.madeBet = true;
-  }
+  };
 
   $scope.hit = function () {
     var playerVal;
@@ -91,7 +91,7 @@ app.controller('MainCtrl', function($scope, $firebaseObject) {
       $scope.dealer.wins = true;
 
       $scope.endHand();
-    };
+    }
   };
 
   $scope.stand = function () {

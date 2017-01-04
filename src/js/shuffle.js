@@ -16,12 +16,12 @@ for (var j = 0; j < numDecks; j++) {
 
   function buildCardObjects(suit) {
     for(var i=2; i<=14;i++){
-        deck.push(new card(i,suit))
+        deck.push(new card(i,suit));
       }
     }
 
     return deck;
-};
+}
 
 function shuffleDeck(deck) {
   var newDeck = [];
@@ -42,19 +42,19 @@ function card(number,suit) {
 	this.image = pickCardImage(number, suit);
 	this.showCard = getFaceCard(number);
   this.val = getCardValue(number);
-};
+}
 
 function pickCardImage(number, suit) {
 
-  if (suit === "H") {suit = "hearts"};
-  if (suit === "D") {suit = "diamonds"};
-  if (suit === "S") {suit = "spades"};
-  if (suit === "C") {suit = "clubs"};
+  if (suit === "H") {suit = "hearts";}
+  if (suit === "D") {suit = "diamonds";}
+  if (suit === "S") {suit = "spades";}
+  if (suit === "C") {suit = "clubs";}
 
-  if (number === 11) {number = "jack"};
-  if (number === 12) {number = "queen"};
-  if (number === 13) {number = "king"};
-  if (number === 14) {number = "ace"};
+  if (number === 11) {number = "jack";}
+  if (number === 12) {number = "queen";}
+  if (number === 13) {number = "king";}
+  if (number === 14) {number = "ace";}
 
 
   return number + "_of_"+suit+".jpg";
@@ -63,18 +63,18 @@ function pickCardImage(number, suit) {
 function getFaceCard (number) {
   var faceName;
 
-  if (number <   11) {faceName = number};
-  if (number === 11) {faceName = "jack"};
-  if (number === 12) {faceName = "queen"};
-  if (number === 13) {faceName = "king"};
-  if (number === 14) {faceName = "ace"};
+  if (number <   11) {faceName = number;}
+  if (number === 11) {faceName = "jack";}
+  if (number === 12) {faceName = "queen";}
+  if (number === 13) {faceName = "king";}
+  if (number === 14) {faceName = "ace";}
   return faceName;
 }
 
 function getCardValue(number) {
   var cardValue = 10;
-  if (number < 10) {cardValue = number};
-  if (number === 14) {cardValue = 11};
+  if (number < 10) {cardValue = number;}
+  if (number === 14) {cardValue = 11;}
 
   return cardValue;
 }
